@@ -7,6 +7,6 @@
             http_proxy: http://proxy-lb.s-mxs.net:8080
 
   roles:
-    - role: zookeeper
+    - role: ansible-bigtop-zookeeper
       zookeeper_hosts: "{{groups['master']}}"
       when: '"master" in group_names'
