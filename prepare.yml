@@ -1,0 +1,41 @@
+- hosts: all
+  remote_user: vagrant
+  become: yes
+  vars:
+        proxy_env:
+            http_proxy: http://proxy-lb.s-mxs.net:8080
+
+  tasks:
+      - name: copy ca
+        copy: src={{ item.src }} dest={{ item.dest }}
+        with_items:
+          - { src: 'files/ca/', dest: '/etc/pki/ca-trust/source/anchors' }
+
+      - name: update cas
+        shell: update-ca-trust
+
+      - name: 'adding yum proxy'
+        lineinfile:
+          path: /etc/yum.conf
+          line: 'proxy=http://proxy-lb.s-mxs.net:8080'
+
+      - name: 'install EPEL repo'
+        yum:
+          name: epel-release
+          state: latest
+
+      - name: Add Hadoop Repo
+        yum_repository:
+          name: hadoop
+          description: Hadoop YUM repo
+          baseurl: http://repos.bigtop.apache.org/releases/1.2.1/centos/7/x86_64
+          gpgkey: https://dist.apache.org/repos/dist/release/bigtop/KEYS
+          gpgcheck: yes
+
+      - name: add java
+        yum:
+          name: java-1.8.0-openjdk
+          state: latest
+
+      - name: disable firewall
+        shell: systemctl disable firewalld && systemctl stop firewalld

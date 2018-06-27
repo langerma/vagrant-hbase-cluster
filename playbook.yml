@@ -1,0 +1,13 @@
+- hosts: all
+  #serial: 1
+  remote_user: vagrant
+  become: yes
+  vars:
+        proxy_env:
+            http_proxy: http://proxy-lb.s-mxs.net:8080
+
+  tasks:
+      - name: prevent hostname from binding to the loopback address
+        command: sed -i '/127.0.0.1\t{{ansible_hostname}}\t{{ansible_hostname}}/d' /etc/hosts
+        ignore_errors: true
+        changed_when: true

@@ -1,0 +1,10 @@
+- hosts: all
+  #serial: 1
+  remote_user: vagrant
+  become: true
+  vars:
+        proxy_env:
+            http_proxy: http://proxy-lb.s-mxs.net:8080
+
+  roles:
+    - role: hbase
