@@ -1,0 +1,9 @@
+[submodule "roles/ansible-bigtop-zookeeper"]
+	path = roles/ansible-bigtop-zookeeper
+	url = https://github.com/langerma/ansible-bigtop-zookeeper
+[submodule "roles/ansible-bigtop-hdfs"]
+	path = roles/ansible-bigtop-hdfs
+	url = https://github.com/langerma/ansible-bigtop-hdfs
+[submodule "roles/ansible-bigtop-hbase"]
+	path = roles/ansible-bigtop-hbase
+	url = https://github.com/langerma/ansible-bigtop-hbase
